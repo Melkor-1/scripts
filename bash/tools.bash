@@ -32,5 +32,7 @@ pip install isort
 pip install mypy
 pip install pylint
 pip install render50
+pip install pep8
+pip install autopep8
                                                                     
 
