@@ -6,7 +6,7 @@ sudo apt-get install -y vim \
 		pkg-config \
 		indent \
 		valgrind \
-        gcc \
+                gcc \
 		pahole \
 		git \
 		universal-ctags \
@@ -23,6 +23,14 @@ sudo apt-get install -y vim \
 		libgsl27 \
 		libsqlite3-0 \
 		libglib2.0-0 \
-        libncursesw6 
+                libncursesw6 \
+		python3-pip 
+
+pip install black
+pip install pycodestyle
+pip install isort
+pip install mypy
+pip install pylint
+pip install render50
                                                                     
 
