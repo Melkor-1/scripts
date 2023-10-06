@@ -25,7 +25,8 @@ sudo apt-get install -y vim \
 		libglib2.0-0 \
                 libncursesw6 \
 		python3-pip \
-  		python3-flask
+  		python3-flask \
+    		tidy 
 
 pip install black
 pip install pycodestyle
