@@ -60,6 +60,9 @@ syntax enable
 set background=dark
 colorscheme torte 
 
+" Set comments to italic
+highlight Comment cterm=italic gui=italic
+
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
 
