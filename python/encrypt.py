@@ -1,32 +1,44 @@
 #!/usr/bin/env python3
 
+import functools
 import os
 import sys
-from cryptography.fernet import Fernet 
+from pathlib import Path
+from typing import Iterable
 
-if len(sys.argv) < 2:
-    print("Usage: <program name> <directory path>.");
-    quit();
+import typer
+from cryptography.fernet import Fernet
 
-# Add all the files in the directory to the list.
-path = sys.argv[1]
-files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+KEY_FILE_PATH = "key.txt"
 
-# Generate a symmetric encryption key. 
-key = Fernet.generate_key()
 
-# Save the key to a file.
-with open("key.txt", "wb") as file:
-    file.write(key)
+def save_key() -> str:
+    key = Fernet.generate_key()
 
-# Encrypt the contents of each file in the list. 
-for file in files:
+    with open(KEY_FILE_PATH, "wb") as file:
+        file.write(key)
+
+    return key
+
+
+def encrypt_file(path: str, key: str, file: str) -> None:
     with open(os.path.join(path, file), "rb") as target:
-        contents = target.read()
+        encrypted_contents = Fernet(key).encrypt(target.read())
 
-    encrypted_contents = Fernet(key).encrypt(contents)
-    
     with open(os.path.join(path, file), "wb") as target:
         target.write(encrypted_contents)
 
-print ("All the files in the directory have been encrypted.\n")
+
+def main(path: Path) -> None:
+    key = save_key()
+    modified_encrypt_file = functools.partial(encrypt_file, path, key)
+    list(
+        map(
+            modified_encrypt_file,
+            (f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))),
+        )
+    )
+
+
+if __name__ == "__main__":
+    typer.run(main)

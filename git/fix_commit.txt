@@ -1,0 +1,2 @@
+git commit --amend -m 'New message.'
+git push --force origin main
